@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pop-up JavaScript</title>
+  </head>
+  <body>
+    <script>
+      function tebakAngka() {
+        let playAgain = true;
+        let Player1 = 0;
+        let Player2 = 0;
+        let round = 0; // Menyimpan jumlah ronde yang telah dimainkan
+        const maxRounds = 5; // Batas maksimal ronde
+
+        while (playAgain && round < maxRounds) {
+          round++; // Tambah hitungan ronde
+          const angkaRahasia = Math.floor(Math.random() * 3) + 1;
+
+          console.log("\nTebak angka dari 1 sampai 3!");
+          console.log(
+            "Game dimulai! Tebak secara bergantian. (Ronde " + round + ")"
+          );
+
+          let tebakanPlayer1 = prompt(
+            `Ronde ${round} - Player 1: masukkan tebakan (1-3):`
+          );
+          let tebakanPlayer2 = prompt(
+            `Ronde ${round} - Player 2: masukkan tebakan (1-3):`
+          );
+
+          // Jika pemain membatalkan permainan
+          if (tebakanPlayer1 == null || tebakanPlayer2 == null) {
+            alert("Permainan dibatalkan.");
+            return;
+          }
+
+          tebakanPlayer1 = Number(tebakanPlayer1);
+          tebakanPlayer2 = Number(tebakanPlayer2);
+
+          // Validasi input
+          if (
+            isNaN(tebakanPlayer1) ||
+            isNaN(tebakanPlayer2) ||
+            ![1, 2, 3].includes(tebakanPlayer1) ||
+            ![1, 2, 3].includes(tebakanPlayer2)
+          ) {
+            alert("Masukkan angka valid antara 1-3!");
+            round--; // Tidak menghitung ronde ini
+            continue;
+          }
+
+          if (tebakanPlayer1 === tebakanPlayer2) {
+            alert("Tebakan tidak boleh sama!");
+            round--; // Tidak menghitung ronde ini
+            continue;
+          }
+
+          // Cek apakah tebakan benar
+          if (tebakanPlayer1 === angkaRahasia) {
+            Player1++;
+            alert(`Angka rahasia: ${angkaRahasia}\nPlayer 1 menang ronde ini!`);
+          } else if (tebakanPlayer2 === angkaRahasia) {
+            Player2++;
+            alert(`Angka rahasia: ${angkaRahasia}\nPlayer 2 menang ronde ini!`);
+          } else {
+            alert(`Angka rahasia: ${angkaRahasia}\nTidak ada yang benar!`);
+          }
+
+          // Menampilkan skor sementara
+          alert(`Skor Sementara:\nPlayer 1: ${Player1}\nPlayer 2: ${Player2}`);
+
+          // Jika ronde sudah mencapai batas maksimal
+          if (round >= maxRounds) {
+            alert(
+              `Permainan selesai!\nSkor Akhir:\nPlayer 1: ${Player1}\nPlayer 2: ${Player2}`
+            );
+            playAgain = false;
+          }
+        }
+      }
+
+      tebakAngka();
+    </script>
+  </body>
+</html>
